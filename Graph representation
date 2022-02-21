@@ -1,0 +1,31 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+
+const int N = 1e3+10;
+int graph[N][N];
+vector<int> graph2[N];
+vector<pair<int,int>> graph3[N];
+ int main(){
+
+	int n,m;
+	cin>>n>>m;
+	
+	for(int i= 0; i<m;++i){
+		int v1,v2,wt;
+		cin>>v1>>v2>>wt;
+
+		//matrix representation 
+		graph[v1][v2]=wt;
+		graph[v2][v1]=wt;
+
+		// Aj list of un-weighted graph
+		graph2[v1].push_back(v2);
+		graph2[v2].push_back(v1);
+
+		// Aj list of weighted graph
+		graph3[v1].push_back({v2,wt});
+		graph3[v2].push_back(make_pair(v1,wt));
+	}
+	return 0; 
+}
