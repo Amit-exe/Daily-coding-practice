@@ -1,0 +1,55 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+const int N = 1e3+4;
+vector<int> graph[N];
+int subtree_sum[N], even_ct[N];
+
+void dfs(int vertex, int par=0){
+
+//```````````````````````````````````after entering vertex`````````````````````````````
+
+	if(vertex%2==0){
+		even_ct[vertex]++;
+	}
+	subtree_sum[vertex]+=vertex;
+	
+	for(auto child : graph[vertex]){
+
+//`````````````````````````````````before entering child```````````````````````````````
+		if(child==par) continue;
+	
+		dfs(child,vertex);
+
+//`````````````````````````````````after exiting  child node```````````````````````````
+
+		subtree_sum[vertex]+=subtree_sum[child];
+		even_ct[vertex]+=even_ct[child];
+	}
+
+//````````````````````````````````before exiting vertex````````````````````````````````
+}
+
+int main(){
+ 	
+	int n;
+	cin>>n;
+	int n1=n;
+	n1-=1;
+	while(n1--){
+
+		int v1,v2;
+		cin>>v1>>v2;
+		graph[v1].push_back(v2);
+		graph[v2].push_back(v1);
+	}
+	
+
+	dfs(1);
+
+
+	for(int i=1;i<=n;i++){
+		cout<<subtree_sum[i]<<" "<<even_ct[i]<<endl;
+	}
+	return 0;
+}
