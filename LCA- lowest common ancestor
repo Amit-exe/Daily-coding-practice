@@ -1,0 +1,75 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+const int N = 1e3+4;
+vector<int> graph[N];
+
+int para[N];
+
+void dfs(int vertex, int par=-1){
+
+	// after entering vertex
+
+
+	para[vertex	] = par;
+	for(auto child : graph[vertex]){
+
+
+		
+		//before entering child
+		if(child==par) continue;
+		
+		dfs(child,vertex);
+
+		//after exiting  child node
+
+		
+	}
+
+	//before exiting vertex
+}
+
+vector<int> path(int v){
+	vector <int> p;
+	while(v!=-1){
+		p.push_back(v);
+		v=para[v];
+	}
+	reverse(p.begin(),p.end());
+	return p;
+}
+
+int main(){
+ 	
+	int n;
+	cin>>n;
+	int n1=n;
+	n1-=1;
+	while(n1--){
+
+		int v1,v2;
+		cin>>v1>>v2;
+		graph[v1].push_back(v2);
+		graph[v2].push_back(v1);
+	}
+
+	dfs(1);
+
+	int x,y;
+	cin>>x>>y;
+	vector <int> path_x,path_y;
+	path_x = path(x);
+	path_y = path(y);
+
+	int min_ln = min(path_x.size(),path_y.size());
+	int lca=-1;
+	for(int i=0; i<min_ln;++i){
+		if(path_y[i]==path_x[i]){
+			lca=path_y[i];
+		}
+		else break;
+	}
+	
+	cout<<lca;
+	return 0;
+} 
