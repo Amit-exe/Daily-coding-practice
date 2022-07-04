@@ -1,0 +1,58 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+const int N = 1e3+4;
+vector<int> graph[N];
+
+int subtree_sum[N];
+
+void dfs(int vertex, int par=-1){
+
+	// after entering vertex
+
+
+	subtree_sum[vertex	] += vertex;
+	for(auto child : graph[vertex]){
+
+
+		
+		//before entering child
+		if(child==par) continue;
+		
+		dfs(child,vertex);
+		subtree_sum[vertex]+=subtree_sum[child];
+		//after exiting  child node
+
+		
+	}
+
+	//before exiting vertex
+}
+
+
+int main(){
+ 	
+	int n;
+	cin>>n;
+	int n1=n;
+	n1-=1;
+	while(n1--){
+
+		int v1,v2;
+		cin>>v1>>v2;
+		graph[v1].push_back(v2);
+		graph[v2].push_back(v1);
+	}
+
+	dfs(1);
+
+	long long ans;
+	for(int i=2;i<n;++i){
+
+		ans=max(ans,((subtree_sum[1]-subtree_sum[i])*1LL*subtree_sum[i]));
+	}
+
+	cout<<ans;
+
+	return 0;
+} 
