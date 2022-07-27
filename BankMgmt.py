@@ -44,30 +44,38 @@ class BankManagement():
     def checkBalance(self,uname):
         pos = self.name.index(uname)
         bal = self.balance[pos]
-        print(f"your account balance is {bal}".center(no_of_star,'*'))
+        return f"your account balance is {bal}".center(no_of_star,'*')
 
-    def Deposit(self,uname,amount):
+    def deposit(self,uname,amount):
         pos = self.name.index(uname)
         self.balance[pos] += amount
         bal = self.balance[pos]
-        print(f"Money deposited your current account balance is {bal}".center(no_of_star, '*'))
+        self.accountHistory[pos].append('Deposited amount: '+ str(amount) + " " + str(bal))
+        return f"Money deposited your current account balance is {bal}".center(no_of_star, '*')
 
     def withdraw(self,uname,amount):
         pos = self.name.index(uname)
         if amount <= self.balance[pos]:
             self.balance[pos] -= amount
             bal = self.balance[pos]
-            print(f"Transaction completed successfully your current account balance {bal}".center(no_of_star, '*'))
+            self.accountHistory[pos].append('Withdrawn amount: ' + str(amount) + " " + str(bal))
+            return f"Transaction completed successfully your current account balance {bal}".center(no_of_star, '*')
         else:
             bal = self.balance[pos]
-            print(f"Insufficient balance try amount less than equal to {bal}".center(no_of_star, '*'))
+            return f"Insufficient balance try amount less than equal to {bal}".center(no_of_star, '*')
 
 
-    def History(self):
-        pass
+    def history(self, uname):
+        pos = self.name.index(uname)
+        print('Transaction | Amount | Balance')
+        for log in self.accountHistory[pos]:
+            print(log)
 
-    def LoanEmi(self):
-        pass
+    def loanEmi(self,amount,rate,time):
+        total_amount = amount*((1+rate/100)**time)
+        months = time*12
+        month_emi = total_amount/months
+        return 'Monthly Emi will be',month_emi
 
     # valid user name (only alphabets)
 
@@ -188,6 +196,7 @@ class BankManagement():
             self.passwd.append(passwd)
 
             self.balance.append(0)
+            self.accountHistory.append([])
             return f"User {name} is Successfully Registered"
 
 
@@ -210,15 +219,27 @@ while True:
                 print("1- Check Balance\n2 - Deposit Amount \n3 - Withdraw \n4 - History \n5 - Loan EMI \n6 - Exit")
                 u_ch = int(input('Enter your Choice: '))
                 if u_ch == 1:
-                    app.checkBalance(uname)
+                    res = app.checkBalance(uname)
+                    print(f' {res} '.center(no_of_star, '*'))
                 elif u_ch == 2:
-                    pass
+                    amount = int(input('Enter the amount to deposit').strip())
+                    res=app.deposit(uname,amount)
+                    print(f' {res} '.center(no_of_star, '*'))
+
                 elif u_ch == 3:
-                    pass
+                    amount = int(input('Enter the amount to withdraw').strip())
+                    res= app.withdraw(uname, amount)
+                    print(f' {res} '.center(no_of_star, '*'))
                 elif u_ch == 4:
-                    pass
+                    app.history(uname)
                 elif u_ch == 5:
-                    pass
+                    print(" welcome to EMI section ".center(no_of_star, '*'))
+                    amount = int(input("enter the loan amount ").strip())
+                    rate = int(input("enter the rate of intrest ").strip())
+                    time = int(input('enter the time period in years ').strip())
+
+                    res = app.loanEmi(amount,rate,time);
+                    print(f' {res} '.center(no_of_star, '*'))
                 elif u_ch == 6:
                     print(" Logout Successfully ".center(no_of_star, '*'))
                     break
