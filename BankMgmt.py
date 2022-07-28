@@ -50,7 +50,7 @@ class BankManagement():
         pos = self.name.index(uname)
         self.balance[pos] += amount
         bal = self.balance[pos]
-        self.accountHistory[pos].append('Deposited amount: '+ str(amount) + " " + str(bal))
+        self.accountHistory[pos].append('Deposited : '+ str(amount) + " " + str(bal))
         return f"Money deposited your current account balance is {bal}".center(no_of_star, '*')
 
     def withdraw(self,uname,amount):
@@ -58,7 +58,7 @@ class BankManagement():
         if amount <= self.balance[pos]:
             self.balance[pos] -= amount
             bal = self.balance[pos]
-            self.accountHistory[pos].append('Withdrawn amount: ' + str(amount) + " " + str(bal))
+            self.accountHistory[pos].append('Withdrawn:  ' + str(amount) + " " + str(bal))
             return f"Transaction completed successfully your current account balance {bal}".center(no_of_star, '*')
         else:
             bal = self.balance[pos]
@@ -253,7 +253,7 @@ while True:
         contact = input('Enter your contact number: ').strip()
         email = input('Enter your Email Address: ').strip()
         address_proof = input('Enter your address proof: ').strip()
-        pan = input('Enter your PAN number:').strip()
+        pan = input('Enter your PAN number:').strip().upper()
         dob = input('Enter your Date of Birth in (DD-MM-YYYY) only: ').strip()
         passwd = input('Enter your password: ').strip()
         confirm_pass = input('Confirm your password: ').strip()
